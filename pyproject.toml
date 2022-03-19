@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datacards"
-version = "0.1.0"
+version = "0.1.1"
 description = "Append missing model cards to Huggingface datasets"
 authors = ["MarkusSagen <markus.john.sagen@gmail.com>"]
 license = "Apache License 2.0"
