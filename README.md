@@ -1,13 +1,34 @@
 # Datacard
 
-This repo aims to find and update the missing model cards for Huggingface datasets.
+This repo aims to find and update the missing model cards for Hugging face datasets.
 
-The goal is to run the script once, manually update and review the files and datasets proposed and make a PR to the datasets repo.
+If you find this a worth while pursute, feel free to reach out and let's try to make the Hugging face datasets complete :wink:
+
+## Setup
+
+```shell
+# install poetry
+git clone --recurse-submodules --remote-submodules git@github.com:Hugging-Face-Supporter/datacards.git
+cd datacards
+git submodule update
+
+poetry install
+```
+
+## Run
+
+```shell
+poetry shell
+python datacards/main.py
+```
 
 ## WIP
 
-- [ ] Look into tools for Github and HF hub. Maybe create PR on new change or release?
-- [ ] Look into strategies for parsing
-      https://www.digitalocean.com/community/tutorials/how-to-use-python-markdown-to-convert-markdown-text-to-html
-
-- [ ] Look into how to provide multiple answers in model card (ex. Glue dataset)
+- [x] Look into how to provide multiple answers in model card (ex. Glue dataset)
+- [x] Find the datasets that are missing information by parsing the README
+- [x] Find ways to know what categories are valid answers
+- [ ] Create method to filter for missing datasets
+- [ ] Create [tool to annotate the datasets](https://huggingface.co/spaces/huggingface/datasets-tagging/blob/main/tagging_app.py)
+- [ ] Toggle between datasets to annotate.
+- [ ] Save modified files to the README again
+- [ ] Once done, find ways to create automatic PR to Hugging face datasets
