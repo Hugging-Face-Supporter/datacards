@@ -27,8 +27,9 @@ python datacards/main.py
 - [x] Look into how to provide multiple answers in model card (ex. Glue dataset)
 - [x] Find the datasets that are missing information by parsing the README
 - [x] Find ways to know what categories are valid answers
-- [ ] Create method to filter for missing datasets
-- [ ] Create [tool to annotate the datasets](https://huggingface.co/spaces/huggingface/datasets-tagging/blob/main/tagging_app.py)
+- [x] Create method to filter for missing datasets
+- [ ] Incorporate the argparse to filter for certiain things
 - [ ] Toggle between datasets to annotate.
-- [ ] Save modified files to the README again
+- [x] Save modified files to the README again
 - [ ] Once done, find ways to create automatic PR to Hugging face datasets
+- [ ] Incorporate the [Huggingface Hub API](https://github.com/huggingface/huggingface_hub/blob/b5ed1420c3f3db7b8f0652efa2a3497698150b0a/src/huggingface_hub/hf_api.py#L582)

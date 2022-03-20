@@ -4,7 +4,11 @@ import os
 from enum import Enum
 from typing import Callable
 
-DATASETS_DIR = "datasets/datasets/"
+from datacards.meta import DatasetMetadata
+
+HF_DATASETS_DIR = "datasets/datasets/"
+METADATA_ATTR = [key for key in DatasetMetadata.__dataclass_fields__.keys()]
+METADATA_ATTR.append("extended")
 
 
 class SortingStrategy(Enum):

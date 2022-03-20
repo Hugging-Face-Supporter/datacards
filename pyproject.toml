@@ -22,6 +22,7 @@ PyYAML = "^6.0"
 # requests = "^2.27.1"
 # hydra-core = "^1.1.1"
 # hydra-colorlog = "^1.1.0"
+huggingface-hub = "^0.4.0"
 
 
 [tool.poetry.dev-dependencies]
@@ -37,6 +38,7 @@ pylint = "2.9.0"
 autopep8 = "^1.6.0"
 python-lsp-server = "^1.4.0"
 pyright = "^1.1.229"
+ptpython = "^3.0.20"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

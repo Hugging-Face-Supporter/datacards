@@ -1,81 +1,96 @@
 #!/usr/bin/env python3
+import os
+import pprint
+from argparse import ArgumentParser
 
 from datacards.files import get_readme_files
-from datacards.parse import parse_readme_table, parse_yaml
-from datacards.types import DATASETS_DIR
-from datacards.utils import dataset_name
+from datacards.meta import (
+    CustomDatasetMetadata,
+    DatasetMetadata,
+    MetaDataValidationError,
+    YamlDuplicateKeysError,
+    YamlMultipleConfigsError,
+    YamlParsingError,
+    known_creators,
+    parse_missing_attributes,
+)
+from datacards.types import HF_DATASETS_DIR, METADATA_ATTR
 
-# TODO: Make smarter search
-# Here we might want to search for those missing:
-#   contributer, license, language, task_categories
 
-"""
-The most complete readme for a dataset!
----
-annotations_creators:
-- crowdsourced
-extended:
-- original
-language_creators:
-- crowdsourced
-- found
-languages:
-- fr
-licenses:
-- cc-by-nc-sa-3.0
-multilinguality:
-- monolingual
-size_categories:
-- 1K<n<10K
-source_datasets:
-- original
-task_categories:
-- question-answering
-- text-retrieval
-task_ids:
-- extractive-qa
-- closed-domain-qa
-paperswithcode_id: fquad
-pretty_name: "FQuAD: French Question Answering Dataset"
----
-"""
+def parse_args():
+    parser = ArgumentParser()
+    parser.add_argument(
+        "--include_all",
+        action="store_true",
+        default=False,
+        help="Make the search include datasets that have their tags",
+    )
+    parser.add_argument(
+        "--search",
+        choices=[k for k in METADATA_ATTR],
+        nargs="+",
+        help="Select what tags to search for",
+    )
+    # TODO:
+    parser.add_argument(
+        "--tags",
+        choices=[],
+        nargs="+",
+        help="Print allowed tags datasets expects",
+    )
 
-# NOTE: Many datasets have a `paperswithcode_id = None`
-# NOTE: All of these datasets that lack info, contain 5 columns or less
-# NOTE: These are 117 datasets out of 741 in total
+    return parser.parse_args()
+
 
 if __name__ == "__main__":
-    dataset_paths = get_readme_files(path=DATASETS_DIR)
-    filter_key = 6  # TODO: Improve the filtering
+    args = parse_args()
+    dataset_paths = get_readme_files(path=HF_DATASETS_DIR)
 
-    num_readmes_incorrect = 0
+    num_correct = 0
+    num_incorrect = 0
     non_data_folders = []
+    all_datasets = []
     correct_datasets = []
-    datasets_to_fix = []
+    incorrect_dataset = {}
+    incorrect_dataset_dict = {k: [] for k in METADATA_ATTR}
+
+    # Find missing attributes in the data
     for path in dataset_paths:
-        # Find the info table in the begining of the READMEs
-        table = parse_readme_table(path)
-        dataset = dataset_name(path)
+        try:
+            metadata = CustomDatasetMetadata.from_readme(path=path)
+            metadata.path = path
+            all_datasets.append(metadata.__dict__)
 
-        # Some folders are there with readmes, but are not actual datasets
-        if len(table) == 0:
-            non_data_folders.append(dataset)
-            continue
+            # Try to get the dataset readme tags
+            try:
+                _ = DatasetMetadata.from_readme(path=path)
+                num_correct += 1
 
-        yaml_obj = parse_yaml(yaml_str=table, path=path, sort=True)
+            # Get datasets missing core tags
+            except TypeError as e:
+                missing_attr = parse_missing_attributes(e)
+                num_incorrect += 1
+                for k in missing_attr:
+                    if k in METADATA_ATTR:
+                        incorrect_dataset_dict[k].append(path)
+                    else:
+                        print(k)
 
-        # Yaml object / python dict
-        if len(yaml_obj.keys()) < filter_key:
-            print(dataset)
-            print(yaml_obj)
-            print()
-            datasets_to_fix.append(dataset)
-            num_readmes_incorrect += 1
-        else:
-            correct_datasets.append(dataset)
+        # The path pointed to was not a dataset path
+        except (
+            MetaDataValidationError,
+            YamlDuplicateKeysError,
+            YamlMultipleConfigsError,
+            YamlParsingError,
+        ):
+            non_data_folders.append(path)
+
+    # Display metadata needed to annotate the missing tags in the datasets
+    # TODO: Add search and filtering from argparse
+    pp = pprint.PrettyPrinter(indent=2, compact=False).pprint
+    pp(incorrect_dataset_dict["task_categories"])
 
     print("------------------------------------")
-    print("\nNumber of incorrect README:\t", num_readmes_incorrect)
-    print("Number of datasets total:\t", len(dataset_paths) - len(non_data_folders))
-    # print(correct_datasets)
+    print("\nNumber of incorrect README:\t", num_incorrect)
+    print("Number of datasets total:\t", num_correct)
     print("\n------------------------------------")

@@ -6,11 +6,11 @@ from typing import Dict, List, Optional
 
 import yaml
 
-from datacards.types import DATASETS_DIR, SortingStrategy
+from datacards.types import HF_DATASETS_DIR, SortingStrategy
 
 
 def get_tmp_yaml_filename(path: str) -> str:
-    return path.replace(DATASETS_DIR, "/tmp/").replace(".md", ".yaml")
+    return path.replace(HF_DATASETS_DIR, "/tmp/").replace(".md", ".yaml")
 
 
 def write_yaml(yaml_str: List[str], path: str = "/tmp/README.yaml") -> None:

@@ -1,0 +1,147 @@
+{
+    "conditional-text-generation": {
+        "description": "data-to-text and text transduction tasks such as translation or summarization",
+        "options": [
+            "machine-translation",
+            "sentence-splitting-fusion",
+            "summarization",
+            "table-to-text",
+            "text-simplification",
+            "explanation-generation",
+            "other-structured-to-text",
+            "other"
+        ]
+    },
+    "question-answering": {
+        "description": "question answering tasks",
+        "options": [
+            "open-domain-qa",
+            "closed-domain-qa",
+            "multiple-choice-qa",
+            "extractive-qa",
+            "abstractive-qa",
+            "other"
+        ]
+    },
+    "sequence-modeling": {
+        "description": "such as language modeling or dialogue",
+        "options": [
+            "dialogue-modeling",
+            "language-modeling",
+            "other-multi-turn",
+            "slot-filling",
+            "other"
+        ]
+    },
+    "structure-prediction": {
+        "description": "predicting structural properties of the text, such as syntax",
+        "options": [
+            "coreference-resolution",
+            "named-entity-recognition",
+            "part-of-speech-tagging",
+            "parsing",
+            "semantic-role-labeling",
+            "lemmatization",
+            "word-sense-disambiguation",
+            "other"
+        ]
+    },
+    "text-classification": {
+        "description": "predicting a class index or boolean value",
+        "options": [
+            "acceptability-classification",
+            "entity-linking-classification",
+            "fact-checking",
+            "intent-classification",
+            "multi-class-classification",
+            "multi-label-classification",
+            "natural-language-inference",
+            "semantic-similarity-classification",
+            "sentiment-classification",
+            "topic-classification",
+            "other"
+        ]
+    },
+    "text-retrieval": {
+        "description": "information or text retrieval tasks",
+        "options": [
+            "document-retrieval",
+            "utterance-retrieval",
+            "entity-linking-retrieval",
+            "fact-checking-retrieval",
+            "other"
+        ]
+    },
+    "text-scoring": {
+        "description": "text scoring tasks, predicting a real valued score for some text",
+        "options": [
+            "semantic-similarity-scoring",
+            "sentiment-scoring",
+            "other"
+        ]
+    },
+    "speech-processing": {
+        "description": "tasks related to the analysis and representations of speech signals",
+        "options": [
+            "automatic-speech-recognition",
+            "phoneme-recognition",
+            "keyword-spotting",
+            "query-by-example-spoken-term-detection",
+            "speaker-identification",
+            "automatic-speaker-verification",
+            "speaker-diarization",
+            "intent-classification",
+            "slot-filling",
+            "emotion-recognition"
+        ]
+    },
+    "time-series-forecasting": {
+        "description": "tasks related to predicting future values of a time series",
+        "options": [
+            "univariate-time-series-forecasting"
+        ]
+    },
+    "object-detection": {
+        "description": "tasks related to detecting instances of objects from a particular class in an image",
+        "options": [
+            "face-detection",
+            "other"
+        ]
+    },
+    "image-to-text": {
+        "description": "tasks related to generating text from images",
+        "options": [
+            "image-captioning",
+            "other"
+        ]
+    },
+    "text-to-image": {
+        "description": "tasks related to generating images from text",
+        "options": []
+    },
+    "image-segmentation": {
+        "description": "tasks related to detecting and delineating distinct objects in images",
+        "options": [
+            "instance-segmentation",
+            "semantic-segmentation",
+            "panoptic-segmentation",
+            "other"
+        ]
+    },
+    "image-classification": {
+        "description": "tasks related to identifying what images represent",
+        "options": [
+            "multi-label-image-classification",
+            "single-label-image-classification",
+            "other"
+        ]
+
+    },
+
+    "other": {
+        "description": "other task family not mentioned here",
+        "options": [
+            "other"
+        ]
+    }
+}
